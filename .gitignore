@@ -1,9 +1,0 @@
-.bundle/
-/log/*
-!/log/.keep
-/tmp
-/Gemfile.lock
-/db/schema.rb
-/.project
-/.byebug_history
-/public/system/*
