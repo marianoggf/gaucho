@@ -1,9 +1,7 @@
 source "http://rubygems.org"
 gemspec
 
-gem 'rails-api'
 gem 'active_model_serializers', :git => 'https://github.com/rails-api/active_model_serializers.git'
-
 
 group :development, :test do
   gem 'factory_girl_rails'
