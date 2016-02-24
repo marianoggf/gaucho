@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["marianoggf@gmail.com"]
   s.homepage    = ""
   s.summary     = "Argentinian gem for accouting"
-  s.description = "."
+  s.description = "Argentinian gem for accouting managment"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

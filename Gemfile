@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 gemspec
 
+gem 'sqlite3'
 gem 'active_model_serializers', :git => 'https://github.com/rails-api/active_model_serializers.git'
 
 group :development, :test do
