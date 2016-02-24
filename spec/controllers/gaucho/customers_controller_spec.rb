@@ -6,6 +6,7 @@ module Gaucho
     context "GET #index" do
       before do
         10.times { create(:customer) } 
+        byebug
         get :index, params
       end
       context "when retrieving all customers" do

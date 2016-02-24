@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @customer_ca_movement.amount %>
+</p>
+
+<p>
+  <strong>Previous balance:</strong>
+  <%= @customer_ca_movement.previous_balance %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @customer_ca_movement.date %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @customer_ca_movement.customer %>
+</p>
+
+<p>
+  <strong>Customer ca movement type:</strong>
+  <%= @customer_ca_movement.customer_ca_movement_type %>
+</p>
+
+<%= link_to 'Edit', edit_customer_ca_movement_path(@customer_ca_movement) %> |
+<%= link_to 'Back', customer_ca_movements_path %>

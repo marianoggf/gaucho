@@ -1,0 +1,37 @@
+<%= form_for(@customer_ca_movement) do |f| %>
+  <% if @customer_ca_movement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@customer_ca_movement.errors.count, "error") %> prohibited this customer_ca_movement from being saved:</h2>
+
+      <ul>
+      <% @customer_ca_movement.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :previous_balance %><br>
+    <%= f.text_field :previous_balance %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br>
+    <%= f.datetime_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_id %><br>
+    <%= f.text_field :customer_id %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_ca_movement_type_id %><br>
+    <%= f.text_field :customer_ca_movement_type_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

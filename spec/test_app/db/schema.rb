@@ -11,9 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222173033) do
+ActiveRecord::Schema.define(version: 20160224140451) do
 
-  create_table "gaucho_customers", force: :cascade do |t|
+  create_table "customer_ca_movement_types", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "is_income"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customer_ca_movements", force: :cascade do |t|
+    t.decimal  "amount"
+    t.decimal  "previous_balance"
+    t.datetime "date"
+    t.integer  "customer_id"
+    t.integer  "customer_ca_movement_type_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "customer_ca_movements", ["customer_ca_movement_type_id"], name: "index_customer_ca_movements_on_customer_ca_movement_type_id"
+  add_index "customer_ca_movements", ["customer_id"], name: "index_customer_ca_movements_on_customer_id"
+
+  create_table "customers", force: :cascade do |t|
     t.string   "name"
     t.string   "cuit"
     t.string   "address"
