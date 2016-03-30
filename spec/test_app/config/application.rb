@@ -27,6 +27,16 @@ module TestApp
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # Para hacer andar factory Girl en console. Solo por ser plugin
+    console do
+        FactoryGirl.definition_file_paths << Pathname.new("../factories")
+        FactoryGirl.definition_file_paths.uniq!
+        FactoryGirl.find_definitions
+    end
   end
+
+
 end
+
 

@@ -16,9 +16,4 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", "~> 4.2.0"
-
-  s.add_development_dependency 'mysql2', '~> 0.3.18'
-  s.add_development_dependency 'rails-api'
-
 end

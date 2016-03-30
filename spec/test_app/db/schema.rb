@@ -11,34 +11,65 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224140451) do
+ActiveRecord::Schema.define(version: 20160330124035) do
 
   create_table "customer_ca_movement_types", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       limit: 255
     t.boolean  "is_income"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "customer_ca_movements", force: :cascade do |t|
-    t.decimal  "amount"
-    t.decimal  "previous_balance"
+    t.decimal  "amount",                                 precision: 10
+    t.decimal  "previous_balance",                       precision: 16, scale: 2
     t.datetime "date"
-    t.integer  "customer_id"
-    t.integer  "customer_ca_movement_type_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "customer_id",                  limit: 4
+    t.integer  "customer_ca_movement_type_id", limit: 4
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
   end
 
-  add_index "customer_ca_movements", ["customer_ca_movement_type_id"], name: "index_customer_ca_movements_on_customer_ca_movement_type_id"
-  add_index "customer_ca_movements", ["customer_id"], name: "index_customer_ca_movements_on_customer_id"
+  add_index "customer_ca_movements", ["customer_ca_movement_type_id"], name: "index_customer_ca_movements_on_customer_ca_movement_type_id", using: :btree
+  add_index "customer_ca_movements", ["customer_id"], name: "index_customer_ca_movements_on_customer_id", using: :btree
 
   create_table "customers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "cuit"
-    t.string   "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 255
+    t.string   "cuit",       limit: 255
+    t.string   "address",    limit: 255
+    t.decimal  "total",                  precision: 16, scale: 2
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
+  create_table "sale_details", force: :cascade do |t|
+    t.decimal  "quantity",                precision: 16, scale: 4
+    t.decimal  "unit_price",              precision: 16, scale: 2
+    t.decimal  "iva",                     precision: 10, scale: 4
+    t.string   "description", limit: 255
+    t.integer  "sale_id",     limit: 4
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "sale_details", ["sale_id"], name: "index_sale_details_on_sale_id", using: :btree
+
+  create_table "sales", force: :cascade do |t|
+    t.datetime "date"
+    t.datetime "prescription_date"
+    t.integer  "customer_id",             limit: 4
+    t.integer  "customer_ca_movement_id", limit: 4
+    t.boolean  "archivable"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "sales", ["customer_ca_movement_id"], name: "index_sales_on_customer_ca_movement_id", using: :btree
+  add_index "sales", ["customer_id"], name: "index_sales_on_customer_id", using: :btree
+
+  add_foreign_key "customer_ca_movements", "customer_ca_movement_types"
+  add_foreign_key "customer_ca_movements", "customers"
+  add_foreign_key "sale_details", "sales"
+  add_foreign_key "sales", "customer_ca_movements"
+  add_foreign_key "sales", "customers"
 end

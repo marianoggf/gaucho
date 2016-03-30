@@ -4,6 +4,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :name
       t.string :cuit
       t.string :address
+      t.decimal :total, precision: 16, scale: 2
 
       t.timestamps null: false
     end
