@@ -40,6 +40,7 @@ module Gaucho::Concerns::CustomerCaMovement
 
     def subtract_amount_to_customers_total
       self.customer.total -= self.signed_amount
+      self.customer.save
     end
 
 end
