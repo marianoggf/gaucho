@@ -10,7 +10,7 @@ module Gaucho::Concerns::CustomerCaMovement
     before_destroy { mark_for_destruction }
     after_destroy :subtract_amount_to_customers_total
   
-    belongs_to :customer
+    belongs_to :customer, autosave: true
     belongs_to :customer_ca_movement_type
     has_one :sale, dependent: :destroy, inverse_of: :customer_ca_movement
 
@@ -35,8 +35,7 @@ module Gaucho::Concerns::CustomerCaMovement
     end
 
     def calculate_ca_total
-      self.customer.total += self.signed_amount 
-      # (self.persisted? ? CustomerCaMovement.find(self.id).signed_amount : 0)
+      self.customer.total += self.signed_amount - (self.persisted? ? CustomerCaMovement.find(self.id).signed_amount : 0)
     end
 
     def subtract_amount_to_customers_total
