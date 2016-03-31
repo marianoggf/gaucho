@@ -11,7 +11,9 @@ module Gaucho::Concerns::Sale
     validates :archivable, inclusion: [true, false]
 
     before_create :create_customer_ca_movement
-    before_destroy :verificar_marked
+    before_destroy :is_movement_the_destroyer?
+
+    accepts_nested_attributes_for :sale_details, allow_destroy: true
   end
 
   def total
@@ -26,7 +28,7 @@ module Gaucho::Concerns::Sale
       self.customer_ca_movement = CustomerCaMovement.create date: self.date, amount: self.total, customer: self.customer, customer_ca_movement_type_id: CustomerCaMovementType.types[:sale]
     end
 
-    def verificar_marked
+    def is_movement_the_destroyer?
       false unless self.customer_ca_movement.marked_for_destruction?
     end
 end
