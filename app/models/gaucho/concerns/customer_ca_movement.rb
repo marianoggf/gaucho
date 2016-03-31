@@ -35,7 +35,8 @@ module Gaucho::Concerns::CustomerCaMovement
     end
 
     def calculate_ca_total
-      self.customer.total += self.signed_amount - (self.persisted? ? CustomerCaMovement.find(self.id).signed_amount : 0)
+      self.customer.total += self.signed_amount 
+      # (self.persisted? ? CustomerCaMovement.find(self.id).signed_amount : 0)
     end
 
     def subtract_amount_to_customers_total
