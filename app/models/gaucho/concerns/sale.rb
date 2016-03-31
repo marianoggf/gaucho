@@ -4,7 +4,7 @@ module Gaucho::Concerns::Sale
   included do
     belongs_to :customer
     belongs_to :customer_ca_movement, inverse_of: :sale
-    has_many :sale_details, dependent: :destroy
+    has_many :sale_details, inverse_of: :sale_details, dependent: :destroy
 
     validates :date, presence: true
     validates_associated :customer_ca_movement
