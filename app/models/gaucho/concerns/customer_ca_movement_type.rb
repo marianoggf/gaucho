@@ -7,6 +7,7 @@ module Gaucho::Concerns::CustomerCaMovementType
     
     has_many :customer_ca_movements
     validates :name, presence: true
+    validates :manual, inclusion: [true, false]
   end
   
 end 

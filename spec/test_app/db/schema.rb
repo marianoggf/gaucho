@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330124035) do
+ActiveRecord::Schema.define(version: 20160401173529) do
 
   create_table "customer_ca_movement_types", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.boolean  "is_income"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.boolean  "manual"
   end
 
   create_table "customer_ca_movements", force: :cascade do |t|
