@@ -7,7 +7,6 @@ module Gaucho::Concerns::Customer
     validates :name, presence: true
   end
 
-
   private
 
     def init_total
