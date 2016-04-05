@@ -2,9 +2,6 @@ module Gaucho::Concerns::Sale
   extend ActiveSupport::Concern
     
   included do
-    belongs_to :customer
-    belongs_to :customer_ca_movement, inverse_of: :sale
-    has_many :sale_details, inverse_of: :sale, dependent: :destroy
 
     validates :date, presence: true
     validates_associated :customer_ca_movement
@@ -12,6 +9,10 @@ module Gaucho::Concerns::Sale
 
     before_create :create_customer_ca_movement
     before_destroy :is_movement_the_destroyer?
+
+    belongs_to :customer
+    belongs_to :customer_ca_movement, inverse_of: :sale
+    has_many :sale_details, inverse_of: :sale, dependent: :destroy
 
     accepts_nested_attributes_for :sale_details, allow_destroy: true
   end
