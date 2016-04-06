@@ -3,12 +3,12 @@ module Gaucho::Concerns::Sale
     
   included do
 
+    before_create :create_customer_ca_movement
+    before_destroy :is_movement_the_destroyer?
+    
     validates :date, presence: true
     validates_associated :customer_ca_movement
     validates :archivable, inclusion: [true, false]
-
-    before_create :create_customer_ca_movement
-    before_destroy :is_movement_the_destroyer?
 
     belongs_to :customer
     belongs_to :customer_ca_movement, inverse_of: :sale
