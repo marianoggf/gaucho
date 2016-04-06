@@ -7,7 +7,7 @@ module Gaucho::Concerns::Sale
     validates_associated :customer_ca_movement
     validates :archivable, inclusion: [true, false]
 
-    before_create :create_customer_ca_movement, prepend: true
+    before_create :create_customer_ca_movement
     before_destroy :is_movement_the_destroyer?
 
     belongs_to :customer
