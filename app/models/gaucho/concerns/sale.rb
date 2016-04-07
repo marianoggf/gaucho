@@ -7,8 +7,9 @@ module Gaucho::Concerns::Sale
     before_destroy :is_movement_the_destroyer?
     
     validates :date, presence: true
-    validates_associated :customer_ca_movement
     validates :archivable, inclusion: [true, false]
+    validates_associated :customer_ca_movement
+    validates_associated :sale_detail
 
     belongs_to :customer
     belongs_to :customer_ca_movement, inverse_of: :sale

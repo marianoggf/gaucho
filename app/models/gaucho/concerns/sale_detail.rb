@@ -4,8 +4,6 @@ module Gaucho::Concerns::SaleDetail
   included do
     belongs_to :sale, inverse_of: :sale_details
     validates :unit_price, :quantity, :sale, :iva, presence: true
-
-    validates :quantity, :unit_price, :sale, :iva, presence: true
     validates :unit_price, :quantity, numericality: { greater_than: 0 }
   end
 
