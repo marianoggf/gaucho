@@ -4,8 +4,9 @@ module Gaucho::Concerns::Customer
   included do
     has_many :customer_ca_movements
     has_many :sales
+    belongs_to :customer_type
 
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
     
     before_create :init_total
     before_destroy :check_dependencies_gaucho
@@ -24,7 +25,7 @@ module Gaucho::Concerns::Customer
         can_destroy = false
       end
       if self.customer_ca_movements.present?
-        errors[:delete] << "No se puede eliminar porque está asociado a una o varios movimientos de cuenta corriente."
+        errors[:delete] << "No se puede eliminar porque está asociado a uno o varios movimientos de cuenta corriente."
         can_destroy = false
       end
       return can_destroy

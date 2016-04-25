@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-  RSpec.describe Sale, type: :model do
+  describe Sale, type: :model do
     
     subject { create(:sale, sale_details: [build(:sale_detail, unit_price: 100, quantity: 10, iva: 21, sale: nil), build(:sale_detail, unit_price: 200, quantity: 20, iva: 21, sale: nil)]) }
     it { should respond_to(:date) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-  RSpec.describe SaleDetail, type: :model do
+  describe SaleDetail, type: :model do
     
     subject { create(:sale_detail, unit_price: 100, quantity: 10, iva: 21) }
     it { should respond_to(:iva) }

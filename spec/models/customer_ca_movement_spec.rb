@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe CustomerCaMovement, type: :model do
+describe CustomerCaMovement, type: :model do
 
   subject { create(:customer_ca_movement, amount: 10000, customer_ca_movement_type: CustomerCaMovementType.find(1)) }
-  let(:customer) { FactoryGirl.create(:customer, total: 10000)}
+  let(:customer) { create(:customer, total: 10000)}
   it { should respond_to(:amount) }
   it { should respond_to(:previous_balance) }
   it { should respond_to(:date) }
@@ -26,8 +26,8 @@ RSpec.describe CustomerCaMovement, type: :model do
   end
 
   context '#calculate_ca_total (private method)' do
-    let(:movement_1) { FactoryGirl.create(:customer_ca_movement, amount: 1000, customer: customer, customer_ca_movement_type: CustomerCaMovementType.find(1))}
-    let(:movement_2) { FactoryGirl.create(:customer_ca_movement, amount: 2000, customer: customer, customer_ca_movement_type: CustomerCaMovementType.find(2))}
+    let(:movement_1) { create(:customer_ca_movement, amount: 1000, customer: customer, customer_ca_movement_type: CustomerCaMovementType.find(1))}
+    let(:movement_2) { create(:customer_ca_movement, amount: 2000, customer: customer, customer_ca_movement_type: CustomerCaMovementType.find(2))}
     let(:two_movements) do
       movement_1
       movement_2

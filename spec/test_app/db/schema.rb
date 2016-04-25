@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401173529) do
+ActiveRecord::Schema.define(version: 20160425182701) do
 
   create_table "customer_ca_movement_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -34,14 +34,21 @@ ActiveRecord::Schema.define(version: 20160401173529) do
   add_index "customer_ca_movements", ["customer_ca_movement_type_id"], name: "index_customer_ca_movements_on_customer_ca_movement_type_id", using: :btree
   add_index "customer_ca_movements", ["customer_id"], name: "index_customer_ca_movements_on_customer_id", using: :btree
 
-  create_table "customers", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "cuit",       limit: 255
-    t.string   "address",    limit: 255
-    t.decimal  "total",                  precision: 16, scale: 2
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+  create_table "customer_types", force: :cascade do |t|
+    t.string "name", limit: 255
   end
+
+  create_table "customers", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "cuit",             limit: 255
+    t.string   "address",          limit: 255
+    t.decimal  "total",                        precision: 16, scale: 2
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.integer  "customer_type_id", limit: 4
+  end
+
+  add_index "customers", ["customer_type_id"], name: "index_customers_on_customer_type_id", using: :btree
 
   create_table "sale_details", force: :cascade do |t|
     t.decimal  "quantity",                precision: 16, scale: 4
@@ -70,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160401173529) do
 
   add_foreign_key "customer_ca_movements", "customer_ca_movement_types"
   add_foreign_key "customer_ca_movements", "customers"
+  add_foreign_key "customers", "customer_types"
   add_foreign_key "sale_details", "sales"
   add_foreign_key "sales", "customer_ca_movements"
   add_foreign_key "sales", "customers"
