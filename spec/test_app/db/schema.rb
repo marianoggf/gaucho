@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425182701) do
+ActiveRecord::Schema.define(version: 20160425204037) do
 
   create_table "customer_ca_movement_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 20160425182701) do
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
     t.integer  "customer_type_id", limit: 4
+    t.string   "contact_name",     limit: 255
+    t.string   "phone",            limit: 255
+    t.string   "observation",      limit: 255
   end
 
   add_index "customers", ["customer_type_id"], name: "index_customers_on_customer_type_id", using: :btree

@@ -11,6 +11,8 @@ describe Customer, type: :model do
   it { should belong_to :customer_type }
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
+  it { should validate_uniqueness_of(:cuit).allow_blank }
+
 
   context "#destroy" do
     context 'without associations' do

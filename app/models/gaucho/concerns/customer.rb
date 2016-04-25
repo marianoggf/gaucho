@@ -7,6 +7,7 @@ module Gaucho::Concerns::Customer
     belongs_to :customer_type
 
     validates :name, presence: true, uniqueness: true
+    validates :cuit, uniqueness: true, allow_blank: true
     
     before_create :init_total
     before_destroy :check_dependencies_gaucho
@@ -30,4 +31,4 @@ module Gaucho::Concerns::Customer
       end
       return can_destroy
     end
-end 
+end

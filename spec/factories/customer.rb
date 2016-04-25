@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :customer do
     sequence(:name) { |i| "Client#{i}"}
-    sequence(:cuit) { |i| "30-" + i.to_s + "-5"}
+    sequence(:cuit) { |i| "30-" + i.to_s + "-5a"}
     sequence(:address) { |i| "Av. Siempre Viva #{i}"}
     total 0
     customer_type CustomerType.first
