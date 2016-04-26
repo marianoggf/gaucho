@@ -58,10 +58,11 @@ ActiveRecord::Schema.define(version: 20160426133230) do
   end
 
   create_table "receipt_details", force: :cascade do |t|
-    t.integer "receipt_id", limit: 4
-    t.decimal "quantity",             precision: 16, scale: 2
-    t.decimal "unit_price",           precision: 16, scale: 2
-    t.decimal "iva",                  precision: 10, scale: 4
+    t.integer "receipt_id",  limit: 4
+    t.string  "description", limit: 255
+    t.decimal "quantity",                precision: 16, scale: 2
+    t.decimal "unit_price",              precision: 16, scale: 2
+    t.decimal "iva",                     precision: 10, scale: 4
   end
 
   add_index "receipt_details", ["receipt_id"], name: "index_receipt_details_on_receipt_id", using: :btree

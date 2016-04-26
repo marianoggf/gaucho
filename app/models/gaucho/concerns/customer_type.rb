@@ -1,5 +1,6 @@
 module Gaucho::Concerns::CustomerType
   extend ActiveSupport::Concern
+  include Gaucho::Concerns::Indestructible
 
   included do
     has_many :customers
