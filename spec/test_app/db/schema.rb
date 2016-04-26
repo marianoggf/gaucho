@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425204037) do
+ActiveRecord::Schema.define(version: 20160426133230) do
 
   create_table "customer_ca_movement_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -53,6 +53,34 @@ ActiveRecord::Schema.define(version: 20160425204037) do
 
   add_index "customers", ["customer_type_id"], name: "index_customers_on_customer_type_id", using: :btree
 
+  create_table "receipt_categories", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
+  create_table "receipt_details", force: :cascade do |t|
+    t.integer "receipt_id", limit: 4
+    t.decimal "quantity",             precision: 16, scale: 2
+    t.decimal "unit_price",           precision: 16, scale: 2
+    t.decimal "iva",                  precision: 10, scale: 4
+  end
+
+  add_index "receipt_details", ["receipt_id"], name: "index_receipt_details_on_receipt_id", using: :btree
+
+  create_table "receipt_types", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
+  create_table "receipts", force: :cascade do |t|
+    t.string  "number",              limit: 255
+    t.integer "receipt_type_id",     limit: 4
+    t.integer "receipt_category_id", limit: 4
+    t.integer "customer_id",         limit: 4
+  end
+
+  add_index "receipts", ["customer_id"], name: "index_receipts_on_customer_id", using: :btree
+  add_index "receipts", ["receipt_category_id"], name: "index_receipts_on_receipt_category_id", using: :btree
+  add_index "receipts", ["receipt_type_id"], name: "index_receipts_on_receipt_type_id", using: :btree
+
   create_table "sale_details", force: :cascade do |t|
     t.decimal  "quantity",                precision: 16, scale: 4
     t.decimal  "unit_price",              precision: 16, scale: 2
@@ -81,6 +109,10 @@ ActiveRecord::Schema.define(version: 20160425204037) do
   add_foreign_key "customer_ca_movements", "customer_ca_movement_types"
   add_foreign_key "customer_ca_movements", "customers"
   add_foreign_key "customers", "customer_types"
+  add_foreign_key "receipt_details", "receipts"
+  add_foreign_key "receipts", "customers"
+  add_foreign_key "receipts", "receipt_categories"
+  add_foreign_key "receipts", "receipt_types"
   add_foreign_key "sale_details", "sales"
   add_foreign_key "sales", "customer_ca_movements"
   add_foreign_key "sales", "customers"
