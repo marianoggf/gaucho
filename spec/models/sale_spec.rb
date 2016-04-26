@@ -8,6 +8,7 @@ require 'rails_helper'
     it { should belong_to(:customer_ca_movement)}
     it { should belong_to(:customer)}
     it { should have_many(:sale_details).dependent(:destroy) }
+    it { should accept_nested_attributes_for(:sale_details).allow_destroy(true) }
     it { should validate_presence_of(:date) }
 
     context '#total' do

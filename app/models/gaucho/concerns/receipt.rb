@@ -9,6 +9,8 @@ module Gaucho::Concerns::Receipt
 
     validates :number, :customer, :receipt_type, :receipt_category, presence: true
     validates :number, uniqueness: true
+
+    accepts_nested_attributes_for :receipt_details, allow_destroy: true
   end
 
 

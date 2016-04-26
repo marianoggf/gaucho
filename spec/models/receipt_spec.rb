@@ -13,5 +13,6 @@ describe Receipt, type: :model do
   it { should validate_presence_of :receipt_category }
   it { should validate_presence_of :customer }
   it { should validate_uniqueness_of(:number) }
+  it { should accept_nested_attributes_for(:receipt_details).allow_destroy(true) }
 
 end
