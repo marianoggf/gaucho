@@ -8,4 +8,8 @@ module Gaucho::Concerns::ReceiptDetail
     validates :unit_price, :quantity, :iva, numericality: { greater_than_or_equal_to: 0 }
   end
 
+  def subtotal
+    (self.unit_price * self.quantity) * ( 1 + 0.01 * self.iva )
+  end
+
 end

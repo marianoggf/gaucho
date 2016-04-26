@@ -13,6 +13,10 @@ module Gaucho::Concerns::Receipt
     accepts_nested_attributes_for :receipt_details, allow_destroy: true
   end
 
+  def total
+    self.receipt_details.sum("unit_price * quantity * ( 1 + ( 0.01 * iva ) )")  
+  end
+
 
 
 end

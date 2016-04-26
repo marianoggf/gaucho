@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe ReceiptDetail, type: :model do
-    
+
+  subject { create :receipt_detail }    
   it { should have_db_column(:description).of_type(:string) }
   it { should have_db_column(:quantity).of_type(:decimal) }
   it { should have_db_column(:unit_price).of_type(:decimal) }
@@ -14,5 +15,10 @@ describe ReceiptDetail, type: :model do
   it { should validate_numericality_of(:quantity).is_greater_than_or_equal_to(0) }
   it { should validate_numericality_of(:unit_price).is_greater_than_or_equal_to(0) }
   it { should validate_numericality_of(:iva).is_greater_than_or_equal_to(0) }
+
+  context "#subtotal" do
+    its(:subtotal) { should eq 121 }
+  end
+
 
 end
