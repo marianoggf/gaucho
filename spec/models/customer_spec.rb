@@ -8,7 +8,7 @@ describe Customer, type: :model do
   it { should respond_to(:address) }
   it { should have_many(:customer_ca_movements)}
   it { should have_many(:sales)}
-  it { should belong_to :customer_type }
+  it { should belong_to :customer_category }
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
   it { should validate_uniqueness_of(:cuit).allow_blank }

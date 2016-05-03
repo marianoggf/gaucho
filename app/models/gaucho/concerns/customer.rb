@@ -4,7 +4,7 @@ module Gaucho::Concerns::Customer
   included do
     has_many :customer_ca_movements
     has_many :sales
-    belongs_to :customer_type
+    belongs_to :customer_category
 
     validates :name, presence: true, uniqueness: true
     validates :cuit, uniqueness: true, allow_blank: true

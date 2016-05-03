@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426133230) do
+ActiveRecord::Schema.define(version: 20160503144815) do
 
   create_table "customer_ca_movement_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -34,24 +34,24 @@ ActiveRecord::Schema.define(version: 20160426133230) do
   add_index "customer_ca_movements", ["customer_ca_movement_type_id"], name: "index_customer_ca_movements_on_customer_ca_movement_type_id", using: :btree
   add_index "customer_ca_movements", ["customer_id"], name: "index_customer_ca_movements_on_customer_id", using: :btree
 
-  create_table "customer_types", force: :cascade do |t|
+  create_table "customer_categories", force: :cascade do |t|
     t.string "name", limit: 255
   end
 
   create_table "customers", force: :cascade do |t|
-    t.string   "name",             limit: 255
-    t.string   "cuit",             limit: 255
-    t.string   "address",          limit: 255
-    t.decimal  "total",                        precision: 16, scale: 2
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
-    t.integer  "customer_type_id", limit: 4
-    t.string   "contact_name",     limit: 255
-    t.string   "phone",            limit: 255
-    t.string   "observation",      limit: 255
+    t.string   "name",                 limit: 255
+    t.string   "cuit",                 limit: 255
+    t.string   "address",              limit: 255
+    t.decimal  "total",                            precision: 16, scale: 2
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.integer  "customer_category_id", limit: 4
+    t.string   "contact_name",         limit: 255
+    t.string   "phone",                limit: 255
+    t.string   "observation",          limit: 255
   end
 
-  add_index "customers", ["customer_type_id"], name: "index_customers_on_customer_type_id", using: :btree
+  add_index "customers", ["customer_category_id"], name: "index_customers_on_customer_category_id", using: :btree
 
   create_table "receipt_categories", force: :cascade do |t|
     t.string "name", limit: 255
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20160426133230) do
 
   add_foreign_key "customer_ca_movements", "customer_ca_movement_types"
   add_foreign_key "customer_ca_movements", "customers"
-  add_foreign_key "customers", "customer_types"
+  add_foreign_key "customers", "customer_categories"
   add_foreign_key "receipt_details", "receipts"
   add_foreign_key "receipts", "customers"
   add_foreign_key "receipts", "receipt_categories"

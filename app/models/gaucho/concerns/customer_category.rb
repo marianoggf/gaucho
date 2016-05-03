@@ -1,4 +1,4 @@
-module Gaucho::Concerns::CustomerType
+module Gaucho::Concerns::CustomerCategory
   extend ActiveSupport::Concern
   include Gaucho::Concerns::Indestructible
 
