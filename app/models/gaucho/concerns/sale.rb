@@ -8,8 +8,6 @@ module Gaucho::Concerns::Sale
     
     validates :date, presence: true
     validates :archivable, inclusion: [true, false]
-    validates_associated :customer_ca_movement
-    validates_associated :sale_details
 
     belongs_to :customer
     belongs_to :customer_ca_movement, inverse_of: :sale
