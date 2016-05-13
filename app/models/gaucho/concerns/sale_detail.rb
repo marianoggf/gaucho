@@ -4,7 +4,8 @@ module Gaucho::Concerns::SaleDetail
   included do
     belongs_to :sale, inverse_of: :sale_details
     validates :unit_price, :quantity, :sale, :iva, presence: true
-    validates :unit_price, :quantity, :iva, numericality: { greater_than_or_equal_to: 0 }
+    validates :iva, numericality: { greater_than_or_equal_to: 0 }
+    validates :unit_price, :quantity, numericality: { greater_than: 0 }
   end
 
   def subtotal
