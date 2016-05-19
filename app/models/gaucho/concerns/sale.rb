@@ -4,7 +4,7 @@ module Gaucho::Concerns::Sale
   included do
 
     before_create :create_customer_ca_movement
-    before_destroy :is_movement_the_destroyer?
+    before_destroy :is_movement_the_destroyer?, if: "customer_ca_movement.present?"
     
     validates :date, presence: true
     validates :archivable, inclusion: [true, false]
