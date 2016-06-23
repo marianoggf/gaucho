@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623144346) do
+ActiveRecord::Schema.define(version: 20160623185802) do
 
   create_table "customer_ca_movement_categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 20160623144346) do
 
   create_table "sales", force: :cascade do |t|
     t.datetime "date"
-    t.datetime "prescription_date"
     t.integer  "customer_id",             limit: 4
     t.integer  "customer_ca_movement_id", limit: 4
     t.boolean  "archivable"
