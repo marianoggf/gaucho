@@ -25,7 +25,7 @@ module Gaucho::Concerns::Sale
   private
 
     def create_customer_ca_movement
-      self.customer_ca_movement = CustomerCaMovement.create date: self.date, amount: self.total, customer: self.customer, customer_ca_movement_type_id: 3
+      self.customer_ca_movement = CustomerCaMovement.create date: self.date, amount: self.total, customer: self.customer, customer_ca_movement_category_id: 3
     end
 
     def is_movement_the_destroyer?

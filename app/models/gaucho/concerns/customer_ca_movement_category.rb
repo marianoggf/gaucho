@@ -1,4 +1,4 @@
-module Gaucho::Concerns::CustomerCaMovementType
+module Gaucho::Concerns::CustomerCaMovementCategory
   extend ActiveSupport::Concern
 
 

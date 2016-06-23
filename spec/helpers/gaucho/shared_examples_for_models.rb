@@ -1,7 +1,7 @@
-shared_examples_for 'falsy and error setter' do |message|
+shared_examples_for 'falsy and error setter' do
   it 'returns false and sets error message' do
     expect(subject.destroy).to equal(false)
-    expect(subject.errors[:delete]).to include message
+    expect(subject.errors[:data].count).not_to eq nil
   end
 end
 
