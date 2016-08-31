@@ -15,3 +15,6 @@ ReceiptType.find_or_create_by! id: 1, name: "Tipo A"
 ReceiptType.find_or_create_by! id: 2, name: "Tipo B"
 ReceiptType.find_or_create_by! id: 3, name: "Tipo C"
 ReceiptType.find_or_create_by! id: 4, name: "Tipo X"
+
+CustomerCaMovementStatus.find_or_create_by! id: 1, name: "Activo", code: 1
+CustomerCaMovementStatus.find_or_create_by! id: 2, name: "Anulado", code: 2

@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe CustomerCaMovement, type: :model do
 
-  subject { create(:customer_ca_movement, amount: 10000, customer_ca_movement_category: CustomerCaMovementCategory.find(1)) }
+  subject { create :customer_ca_movement, amount: 10000  }
+  let(:now) { DateTime.now }
   let(:customer) { create(:customer)}
   it { should respond_to(:amount) }
   it { should respond_to(:previous_balance) }
@@ -25,6 +26,17 @@ describe CustomerCaMovement, type: :model do
     end
   end
 
+  context 'when creating a movement' do
+    subject { create :customer_ca_movement, customer_ca_movement_status_id: 2 }
+    its(:customer_ca_movement_status_id) { should eq 1  }
+  end
+
+  context 'when changing customer_ca_movement_status_id to other than 1' do
+    subject { create :customer_ca_movement }
+    before { subject.update customer_ca_movement_status_id: 2 }
+    its(:customer_ca_movement_status_id) { should eq 2  }
+  end
+
   context 'concerning neighbours' do
     let(:customer) { create :customer }
     context "with three movements" do
@@ -45,13 +57,30 @@ describe CustomerCaMovement, type: :model do
       end
     end
     context "with mixed dates" do
-      let!(:first) { create(:customer_ca_movement, amount: 100, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now - 1.second)}
-      let!(:second) { create(:customer_ca_movement, amount: 200, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now - 1.second)}
-      let!(:third) { create(:customer_ca_movement, amount: 300, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now)}
-      let!(:fourth) {  create(:customer_ca_movement, amount: 400, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now) }
-      let!(:fifth) { create(:customer_ca_movement, amount: 500, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now)}
-      let!(:sixth) { create(:customer_ca_movement, amount: 600, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now + 1.second)}
-      let!(:seventh) { create(:customer_ca_movement, amount: 700, customer_ca_movement_category_id: 1, customer: customer, date: DateTime.now + 1.second)}
+      let!(:canceled_movement_1) { create :canceled_customer_ca_movement, customer: customer, date: now + 3.second }
+      let!(:canceled_movement_2) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:first) { create(:customer_ca_movement, amount: 100, customer: customer, date: now - 1.second)}
+      let!(:canceled_movement_3) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:canceled_movement_4) { create :canceled_customer_ca_movement, customer: customer, date: now + 2.second }
+      let!(:canceled_movement_5) { create :canceled_customer_ca_movement, customer: customer, date: now + 0.second }
+      let!(:second) { create(:customer_ca_movement, amount: 200, customer: customer, date: now - 1.second)}
+      let!(:canceled_movement_6) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:third) { create(:customer_ca_movement, amount: 300, customer: customer, date: now)}
+      let!(:canceled_movement_7) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:fourth) {  create(:customer_ca_movement, amount: 400, customer: customer, date: now) }
+      let!(:canceled_movement_8) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:fifth) { create(:customer_ca_movement, amount: 500, customer: customer, date: now)}
+      let!(:canceled_movement_9) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:sixth) { create(:customer_ca_movement, amount: 600, customer: customer, date: now + 1.second)}
+      let!(:canceled_movement_) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:seventh) { create(:customer_ca_movement, amount: 700, customer: customer, date: now + 1.second)}
+      let!(:canceled_movement_10) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:canceled_movement_11) { create :canceled_customer_ca_movement, customer: customer, date: now + 3.second }
+      let!(:canceled_movement_12) { create :canceled_customer_ca_movement, customer: customer, date: now - 1.second }
+      let!(:from_another_customer) { create(:customer_ca_movement, amount: 100, customer: create(:customer), date: now + 4.second)}
+      let!(:eighth) { create(:customer_ca_movement, amount: 800, customer: customer, date: now + 4.second)}
+      let!(:from_another_customer) { create(:customer_ca_movement, amount: 100, customer: create(:customer), date: now + 4.second)}
+      let!(:canceled_movement_13) { create :canceled_customer_ca_movement, customer: customer, date: now }
       context "#previous" do
         it { expect(first.previous).to eq nil }
         it { expect(second.previous).to eq first }
@@ -60,6 +89,7 @@ describe CustomerCaMovement, type: :model do
         it { expect(fifth.previous).to eq fourth }
         it { expect(sixth.previous).to eq fifth }
         it { expect(seventh.previous).to eq sixth }
+        it { expect(eighth.previous).to eq seventh }
       end
       context "#following" do
         it { expect(first.following).to eq second }
@@ -68,7 +98,8 @@ describe CustomerCaMovement, type: :model do
         it { expect(fourth.following).to eq fifth }
         it { expect(fifth.following).to eq sixth }
         it { expect(sixth.following).to eq seventh }
-        it { expect(seventh.following).to eq nil }
+        it { expect(seventh.following).to eq eighth }
+        it { expect(eighth.following).to eq nil }
       end
       context "#previous_balance" do
         it { expect(first.reload.previous_balance).to eq 0 }
