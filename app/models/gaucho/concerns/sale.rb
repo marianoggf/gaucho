@@ -4,13 +4,12 @@ module Gaucho::Concerns::Sale
   included do
 
     before_create :create_customer_ca_movement
-    before_destroy :is_movement_the_destroyer?, if: "customer_ca_movement.present?"
     
     validates :date, presence: true
     validates :archivable, inclusion: [true, false]
 
     belongs_to :customer
-    belongs_to :customer_ca_movement, inverse_of: :sale
+    belongs_to :customer_ca_movement, inverse_of: :sale, dependent: :destroy
     has_many :sale_details, inverse_of: :sale, dependent: :destroy
 
     accepts_nested_attributes_for :sale_details, allow_destroy: true
@@ -28,7 +27,4 @@ module Gaucho::Concerns::Sale
       self.customer_ca_movement = CustomerCaMovement.create date: self.date, amount: self.total, customer: self.customer, customer_ca_movement_category_id: 3
     end
 
-    def is_movement_the_destroyer?
-      false unless self.customer_ca_movement.marked_for_destruction?
-    end
 end

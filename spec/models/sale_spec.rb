@@ -1,7 +1,7 @@
 require 'rails_helper'
 
   describe Sale, type: :model do
-    
+    before(:all) { ::CustomerCaMovement } 
     subject { create(:sale, sale_details: [build(:sale_detail, unit_price: 100, quantity: 10, iva: 21, sale: nil), build(:sale_detail, unit_price: 200, quantity: 20, iva: 21, sale: nil)]) }
     it { should respond_to(:date) }
     it { should belong_to(:customer_ca_movement)}
@@ -22,9 +22,9 @@ require 'rails_helper'
     context '#destroy' do
       before {subject}
       let(:customer) { subject.customer_ca_movement.customer }
-      its(:destroy) { should eq false }
-      it { expect{ subject.destroy }.not_to change{ CustomerCaMovement.count }.from(1) }
-      it { expect{ subject.destroy }.not_to change{ customer.total }.from(-6050) }
+      it { expect{ subject.destroy }.to change{ CustomerCaMovement.count }.by(-1) }
+      it { expect{ subject.destroy }.to change{ customer.total }.from(-6050).to(0) }
+      it_behaves_like 'self returner when destroyed'     
     end
 
 end

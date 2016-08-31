@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831140636) do
+ActiveRecord::Schema.define(version: 20160831175037) do
 
   create_table "customer_ca_movement_categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -121,6 +121,6 @@ ActiveRecord::Schema.define(version: 20160831140636) do
   add_foreign_key "receipts", "receipt_categories"
   add_foreign_key "receipts", "receipt_types"
   add_foreign_key "sale_details", "sales"
-  add_foreign_key "sales", "customer_ca_movements"
+  add_foreign_key "sales", "customer_ca_movements", on_delete: :cascade
   add_foreign_key "sales", "customers"
 end

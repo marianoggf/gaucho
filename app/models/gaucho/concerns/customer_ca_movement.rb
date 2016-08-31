@@ -5,6 +5,7 @@ module Gaucho::Concerns::CustomerCaMovement
 
     before_validation :calculate_previous_balance
     before_create :set_status_to_active
+    before_destroy :cancel_destroy, if: 'sale.present? and !sale.destroyed?'
 
     validates :customer_ca_movement_category, :amount, :date, :customer, :previous_balance, presence: true
     validates :customer_ca_movement_category, :amount, :date, :customer, presence: true
@@ -14,8 +15,8 @@ module Gaucho::Concerns::CustomerCaMovement
     belongs_to :customer_ca_movement_status  
     belongs_to :customer
     belongs_to :customer_ca_movement_category
-    has_one :sale, dependent: :destroy, inverse_of: :customer_ca_movement
-
+    has_one :sale, inverse_of: :customer_ca_movement
+    
     after_save :recalculate_following_movement_previous_balance, if: "following.present?"
 
     scope :ordered, -> { order date: :desc, id: :desc }
@@ -89,6 +90,11 @@ module Gaucho::Concerns::CustomerCaMovement
 
     def set_status_to_active
       self.customer_ca_movement_status_id = 1
+    end
+
+    def cancel_destroy
+      errors.add(:sale, "No se puede eliminar porque tiene una venta asociada")
+      return false
     end
 end
 

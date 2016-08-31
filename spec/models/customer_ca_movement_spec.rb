@@ -5,14 +5,14 @@ describe CustomerCaMovement, type: :model do
   subject { create :customer_ca_movement, amount: 10000  }
   let(:now) { DateTime.now }
   let(:customer) { create(:customer)}
-  it { should respond_to(:amount) }
-  it { should respond_to(:previous_balance) }
-  it { should respond_to(:date) }
+  it { should have_db_column(:amount) }
+  it { should have_db_column(:previous_balance) }
+  it { should have_db_column(:date) }
   it { should respond_to(:following)}
   it { should respond_to(:previous)}
   it { should belong_to(:customer)}
   it { should belong_to(:customer_ca_movement_category)}
-  it { should have_one(:sale).dependent(true)}
+  it { should have_one(:sale)}
   it { should validate_presence_of(:customer_ca_movement_category) }  
   it { should validate_presence_of(:date) } 
   it { should validate_presence_of(:amount) } 
