@@ -1,7 +1,7 @@
 class CreateCustomerCaMovements < ActiveRecord::Migration
   def change
     create_table :customer_ca_movements do |t|
-      t.decimal :amount
+      t.decimal :amount, precision: 16, scale: 2
       t.decimal :previous_balance, precision: 16, scale: 2
       t.timestamp :date
       t.belongs_to :customer, index: true, foreign_key: true
